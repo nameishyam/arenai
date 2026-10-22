@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Server.Application.Configurations;
+using Server.Application.Interfaces.Service;
+using Server.Infrastructure.Services;
 using System.Text;
 
 namespace Server.Api.Extensions
@@ -11,6 +14,7 @@ namespace Server.Api.Extensions
             IConfiguration configuration)
         {
             var jwtSection = configuration.GetSection("Jwt");
+            services.Configure<JwtConfigurations>(jwtSection);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -24,7 +28,7 @@ namespace Server.Api.Extensions
                         ValidIssuer = jwtSection["Issuer"],
                         ValidAudience = jwtSection["Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtSection["Key"]!))
+                        Encoding.UTF8.GetBytes(jwtSection["SecretKey"]!))
                     };
 
                     options.Events = new JwtBearerEvents
@@ -56,6 +60,8 @@ namespace Server.Api.Extensions
                         .AllowCredentials();
                 });
             });
+
+            services.AddScoped<IJwtService, JwtService>();
 
             return services;
         }

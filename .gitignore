@@ -11,6 +11,8 @@ dist/
 
 #Project Files - Manually Ignored
 *.sln
+appsettings.Development.json
+.env
 
 # Compiled Java class files
 *.class

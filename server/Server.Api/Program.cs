@@ -11,6 +11,7 @@ namespace Server.Api
             builder.Services
                 .AddPlugins(builder.Configuration)
                 .AddDatabase(builder.Configuration)
+                .AddApplication()
                 .AddControllers();
 
             var app = builder.Build();
