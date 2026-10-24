@@ -1,15 +1,17 @@
+using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Application.Dto.Request;
 using Server.Application.Exceptions;
-using Server.Application.Features.Commands.Users;
+using Server.Application.Features.Commands.Auth;
 
 namespace Server.Api.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
-    public class UsersController(IMediator mediator) : ControllerBase
+    [ApiVersion(1.0)]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    public class AuthController(IMediator mediator) : ControllerBase
     {
         private const string CookieName = "access_token";
 
@@ -23,20 +25,33 @@ namespace Server.Api.Controllers
 
                 SetAuthCookie(response.AccessToken);
 
-                return StatusCode(201, new
-                {
-                    response.Id,
-                    response.AccessToken
-                });
+                return CreatedAtAction(
+                    nameof(GetMe),
+                    new { id = response.Id },
+                    response);
             }
             catch (ConflictException ex)
             {
                 return Conflict(ex.Message);
             }
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, ex.Message);
-            //}
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("{id:guid}/me")]
+        public async Task<IActionResult> GetMe([FromRoute] Guid id)
+        {
+            try
+            {
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         private void SetAuthCookie(string token)

@@ -12,7 +12,7 @@ using Server.Persistence.Context;
 namespace Server.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20261021060906_InitialCreate")]
+    [Migration("20261024154004_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -58,10 +58,6 @@ namespace Server.Persistence.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

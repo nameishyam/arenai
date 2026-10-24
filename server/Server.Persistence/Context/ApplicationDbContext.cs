@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Domain;
 using Server.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Server.Persistence.Context
 {

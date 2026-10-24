@@ -1,12 +1,14 @@
-﻿using MediatR;
-using FluentValidation;
+﻿using FluentValidation;
+using MediatR;
 using Server.Application;
 
 namespace Server.Api.Extensions
 {
     public static class ApplicationExtensions
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddApplication(
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
             var currentAssembly = typeof(ApplicationReference).Assembly;
 
@@ -18,7 +20,7 @@ namespace Server.Api.Extensions
             services.AddTransient(
                 typeof(IPipelineBehavior<,>),
                 typeof(ValidationBehavior<,>));
-            
+
             return services;
         }
     }

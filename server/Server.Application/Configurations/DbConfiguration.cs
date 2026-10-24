@@ -1,6 +1,6 @@
 ﻿namespace Server.Application.Configurations
 {
-    public class ConnectionStrings
+    public class DbConfiguration
     {
         public string DefaultConnection { get; set; }
     }

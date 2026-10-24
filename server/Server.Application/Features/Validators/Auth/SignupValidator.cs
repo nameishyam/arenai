@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using Server.Application.Features.Commands.Users;
+using Server.Application.Features.Commands.Auth;
 
-namespace Server.Application.Features.Validators.Users
+namespace Server.Application.Features.Validators.Auth
 {
     public class SignupValidator : AbstractValidator<SignupCommand>
     {

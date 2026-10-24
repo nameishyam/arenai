@@ -1,7 +1,7 @@
 <Solution>
   <Project Path="Server.Api/Server.Api.csproj" />
   <Project Path="Server.Application/Server.Application.csproj" />
-  <Project Path="Server.Domain/Server.Domain.csproj" />
-  <Project Path="Server.Infrastructure/Server.Infrastructure.csproj" />
-  <Project Path="Server.Persistence/Server.Persistence.csproj" />
+  <Project Path="Server.Domain/Server.Domain.csproj" Id="60274460-d4dc-4621-b842-761f834b1ed8" />
+  <Project Path="Server.Infrastructure/Server.Infrastructure.csproj" Id="784b043b-f649-4ec4-bf6e-94c9cdccb0c1" />
+  <Project Path="Server.Persistence/Server.Persistence.csproj" Id="950385e0-328b-4bd7-9d1c-776dd9fd861f" />
 </Solution>

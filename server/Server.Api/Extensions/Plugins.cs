@@ -1,20 +1,29 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Server.Application.Configurations;
 using Server.Application.Interfaces.Service;
-using Server.Infrastructure.Services;
+using Server.Infrastructure;
 using System.Text;
 
 namespace Server.Api.Extensions
 {
-    public static class PluginExtensions
+    public static class Plugins
     {
         public static IServiceCollection AddPlugins(
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+            })
+                .AddMvc();
+
             var jwtSection = configuration.GetSection("Jwt");
-            services.Configure<JwtConfigurations>(jwtSection);
+            services.Configure<JwtConfiguration>(jwtSection);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -62,6 +71,7 @@ namespace Server.Api.Extensions
             });
 
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             return services;
         }

@@ -11,8 +11,11 @@ namespace Server.Application
         public async Task<TResponse> Handle(
             TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            if (!validators.Any()) return await next(cancellationToken);
-            
+            if (!validators.Any())
+            {
+                return await next(cancellationToken);
+            }
+
             var context = new ValidationContext<TRequest>(request);
 
             var results = await Task.WhenAll(
@@ -27,6 +30,7 @@ namespace Server.Application
             {
                 throw new ValidationException(failures);
             }
+
             return await next(cancellationToken);
         }
     }

@@ -9,8 +9,8 @@ namespace Server.Api.Extensions
     public static class DatabaseExtensions
     {
         public static IServiceCollection AddDatabase(
-            this IServiceCollection services,
-            IConfiguration configuration)
+           this IServiceCollection services,
+           IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -19,7 +19,7 @@ namespace Server.Api.Extensions
                 );
             });
 
-            services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionStrings"));
+            services.Configure<DbConfiguration>(configuration.GetSection("ConnectionStrings"));
 
             services.AddScoped<IUserRepository, UserRepository>();
 
