@@ -18,7 +18,7 @@ namespace Server.Persistence
                 connection.QuerySingleOrDefaultAsync<long>(query, param));
         }
 
-        private async Task<T> ExecuteOperations<T>(Func<IDbConnection, Task<T>> queryAction)
+        protected async Task<T> ExecuteOperations<T>(Func<IDbConnection, Task<T>> queryAction)
         {
             await using var connection = new NpgsqlConnection(connectionString);
             await connection.OpenAsync();

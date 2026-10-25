@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Application.Dto.Request;
 using Server.Application.Exceptions;
 using Server.Application.Features.Commands.Auth;
+using Server.Application.Features.Queries.Auth;
 
 namespace Server.Api.Controllers
 {
@@ -41,12 +42,16 @@ namespace Server.Api.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id:guid}/me")]
+        [HttpGet("me/{id:guid}")]
         public async Task<IActionResult> GetMe([FromRoute] Guid id)
         {
             try
             {
-                return Ok(id);
+                return Ok(await mediator.Send(new GetMeQuery(id)));
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

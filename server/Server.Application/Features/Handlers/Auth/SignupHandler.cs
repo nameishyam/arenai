@@ -28,6 +28,8 @@ namespace Server.Application.Features.Handlers.Auth
 
             await userRepository.Create(user);
 
+            await emailService.SendEmailAsync(user.Email, "Welcome to ArenAI", "Glad to have you here");
+
             return new SignupResponse
             {
                 Id = user.Id,

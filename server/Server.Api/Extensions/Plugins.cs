@@ -70,6 +70,8 @@ namespace Server.Api.Extensions
                 });
             });
 
+            services.Configure<EmailConfiguration>(configuration.GetSection("EmailConfiguration"));
+
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IEmailService, EmailService>();
 
